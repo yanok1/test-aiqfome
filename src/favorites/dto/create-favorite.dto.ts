@@ -9,4 +9,4 @@ export class CreateFavoriteDto {
   @IsNumber()
   @IsPositive()
   productId: number;
-} 
+}

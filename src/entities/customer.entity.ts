@@ -29,4 +29,4 @@ export class Customer {
 
   @OneToMany(() => Favorite, favorite => favorite.customer)
   favorites: Favorite[];
-} 
+}

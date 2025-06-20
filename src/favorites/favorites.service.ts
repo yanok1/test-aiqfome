@@ -8,7 +8,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Favorite } from '../entities/favorite.entity';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { FakeStoreService, FakeStoreProduct } from '../services/fakestore.service';
+import {
+  FakeStoreService,
+  FakeStoreProduct,
+} from '../services/fakestore.service';
 
 @Injectable()
 export class FavoritesService {
@@ -35,9 +38,8 @@ export class FavoritesService {
     }
 
     // Validar produto na FakeStore API
-    const product: FakeStoreProduct = await this.fakeStoreService.validateProduct(
-      createFavoriteDto.productId,
-    );
+    const product: FakeStoreProduct =
+      await this.fakeStoreService.validateProduct(createFavoriteDto.productId);
 
     // Criar favorito
     const favorite = this.favoriteRepo.create({
@@ -90,4 +92,4 @@ export class FavoritesService {
 
     await this.favoriteRepo.remove(favorite);
   }
-} 
+}

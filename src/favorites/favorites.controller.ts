@@ -81,4 +81,4 @@ export class FavoritesController {
   ) {
     return this.favoritesService.removeByProductId(req.user.userId, productId);
   }
-} 
+}

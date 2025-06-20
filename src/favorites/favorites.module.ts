@@ -11,4 +11,4 @@ import { FakeStoreService } from '../services/fakestore.service';
   providers: [FavoritesService, FakeStoreService],
   exports: [FavoritesService],
 })
-export class FavoritesModule {} 
+export class FavoritesModule {}

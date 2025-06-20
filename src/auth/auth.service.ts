@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,7 +27,10 @@ export class AuthService {
     return this.login(email, password);
   }
 
-  async validateUser(email: string, password: string): Promise<Customer | null> {
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<Customer | null> {
     const customer = await this.customerRepo.findOne({ where: { email } });
     if (!customer || !(customer as any).password) return null;
     const valid = await bcrypt.compare(password, (customer as any).password);
@@ -32,7 +39,8 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const customer = await this.customerRepo.findOne({ where: { email } });
-    if (!customer || !(customer as any).password) throw new UnauthorizedException('Credenciais inválidas');
+    if (!customer || !(customer as any).password)
+      throw new UnauthorizedException('Credenciais inválidas');
     const valid = await bcrypt.compare(password, (customer as any).password);
     if (!valid) throw new UnauthorizedException('Credenciais inválidas');
     const payload = { sub: customer.id, email: customer.email };
@@ -41,4 +49,4 @@ export class AuthService {
       customer: { id: customer.id, name: customer.name, email: customer.email },
     };
   }
-} 
+}

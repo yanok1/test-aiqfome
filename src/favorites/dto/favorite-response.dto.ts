@@ -10,10 +10,14 @@ export class FavoriteResponseDto {
   @ApiProperty({ example: 1 })
   productId: number;
 
-  @ApiProperty({ example: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops' })
+  @ApiProperty({
+    example: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+  })
   productTitle: string;
 
-  @ApiProperty({ example: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg' })
+  @ApiProperty({
+    example: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+  })
   productImage: string;
 
   @ApiProperty({ example: 109.95 })
@@ -27,4 +31,4 @@ export class FavoriteResponseDto {
 
   @ApiProperty()
   updatedAt: Date;
-} 
+}

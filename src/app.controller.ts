@@ -13,4 +13,4 @@ export class AppController {
       status: 'ok',
     };
   }
-} 
+}

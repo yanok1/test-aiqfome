@@ -20,4 +20,4 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       logging: this.configService.get('NODE_ENV') === 'development',
     };
   }
-} 
+}

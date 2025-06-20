@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisModule } from '@nestjs-modules/ioredis';
 import { DatabaseConfig } from './config/database.config';
+import { RedisConfig } from './config/redis.config';
 import { AuthModule } from './auth/auth.module';
 import { CustomersModule } from './customers/customers.module';
 import { FavoritesModule } from './favorites/favorites.module';
@@ -16,6 +18,9 @@ import { AppController } from './app.controller';
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),
+    RedisModule.forRootAsync({
+      useClass: RedisConfig,
+    }),
     AuthModule,
     CustomersModule,
     FavoritesModule,
@@ -23,4 +28,4 @@ import { AppController } from './app.controller';
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {} 
+export class AppModule {}
