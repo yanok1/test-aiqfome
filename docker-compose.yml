@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: aiqfome_postgres
+    environment:
+      POSTGRES_DB: aiqfome_dev
+      POSTGRES_USER: aiqfome_user
+      POSTGRES_PASSWORD: aiqfome_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - aiqfome_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: aiqfome_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - aiqfome_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: aiqfome_app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: aiqfome_dev
+      DATABASE_USER: aiqfome_user
+      DATABASE_PASSWORD: aiqfome_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - aiqfome_network
+    command: npm run start:dev
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  aiqfome_network:
+    driver: bridge 
