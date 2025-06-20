@@ -15,16 +15,6 @@ services:
     networks:
       - aiqfome_network
 
-  redis:
-    image: redis:7-alpine
-    container_name: aiqfome_redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - aiqfome_network
-
   app:
     build:
       context: .
@@ -39,21 +29,17 @@ services:
       DATABASE_NAME: aiqfome_dev
       DATABASE_USER: aiqfome_user
       DATABASE_PASSWORD: aiqfome_password
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
       - postgres
-      - redis
     networks:
       - aiqfome_network
     command: npm run start:dev
 
 volumes:
   postgres_data:
-  redis_data:
 
 networks:
   aiqfome_network:

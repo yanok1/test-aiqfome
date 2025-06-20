@@ -9,16 +9,15 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: this.configService.get('DATABASE_HOST', 'localhost'),
-      port: this.configService.get('DATABASE_PORT', 5432),
-      username: this.configService.get('DATABASE_USER', 'aiqfome_user'),
-      password: this.configService.get('DATABASE_PASSWORD', 'aiqfome_password'),
-      database: this.configService.get('DATABASE_NAME', 'aiqfome_dev'),
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      migrations: [__dirname + '/../database/migrations/*{.ts,.js}'],
-      synchronize: this.configService.get('NODE_ENV') === 'development',
+      host: this.configService.get('DATABASE_HOST'),
+      port: this.configService.get('DATABASE_PORT'),
+      username: this.configService.get('DATABASE_USER'),
+      password: this.configService.get('DATABASE_PASSWORD'),
+      database: this.configService.get('DATABASE_NAME'),
+      entities: ['dist/**/*.entity.js'],
+      migrations: ['dist/database/migrations/*.js'],
+      synchronize: false,
       logging: this.configService.get('NODE_ENV') === 'development',
-      ssl: this.configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
     };
   }
 } 
