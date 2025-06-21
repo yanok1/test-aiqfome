@@ -21,6 +21,9 @@ export class Customer {
   @Column({ length: 100, unique: true })
   email: string;
 
+  @Column({ length: 100 })
+  password: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

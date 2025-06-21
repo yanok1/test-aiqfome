@@ -20,11 +20,22 @@ export class AuthService {
   async register(name: string, email: string, password: string) {
     const exists = await this.customerRepo.findOne({ where: { email } });
     if (exists) throw new ConflictException('E-mail já cadastrado');
+    
     const hash = await bcrypt.hash(password, 10);
     const customer = this.customerRepo.create({ name, email });
     (customer as any).password = hash;
-    await this.customerRepo.save(customer);
-    return this.login(email, password);
+    const savedCustomer = await this.customerRepo.save(customer);
+    
+    // Gerar token JWT diretamente
+    const payload = { sub: savedCustomer.id, email: savedCustomer.email };
+    return {
+      access_token: this.jwtService.sign(payload),
+      customer: { 
+        id: savedCustomer.id, 
+        name: savedCustomer.name, 
+        email: savedCustomer.email 
+      },
+    };
   }
 
   async validateUser(
